@@ -62,9 +62,9 @@ int main(){
 
     wresize(stdscr, y, x);
 
-	/* Set menu mark to the string " * " */
-    set_menu_mark(my_menu, " > ");
-
+	/* Set menu mark to the string */
+	set_menu_mark(my_menu, " < ");
+	set_menu_format(my_menu, 2, 1); 
     /* Print a border around the main window and print a title */
     box(my_menu_win, 0, 0);
 	print_in_middle(my_menu_win, 1, 4, 70, "BUN VENIT LA WORDLE! APASA START PENTRU A INCEPE JOCUL", COLOR_PAIR(1));
@@ -79,8 +79,9 @@ int main(){
 
     curs_set(0);
 
-	while((c = wgetch(my_menu_win)) != 27)
+	while(TRUE)
 	{       
+		c = wgetch(my_menu_win);
         switch(c)
 	        {	case KEY_DOWN:
 				menu_driver(my_menu, REQ_DOWN_ITEM);
@@ -89,18 +90,21 @@ int main(){
 				menu_driver(my_menu, REQ_UP_ITEM);
 				break;
             case 10:
-                {	ITEM *cur;
-                    void (*p)(char *);
-                    cur = current_item(my_menu);
-                    p = item_userptr(cur);
-                    p((char *)item_name(cur));
+                {	ITEM *curr;
+                    curr = current_item(my_menu);
                     pos_menu_cursor(my_menu);
+					if (strcmp(item_name(curr), "IESIRE JOC") == 0)
+						goto exit;
+					if (strcmp(item_name(curr), "START JOC") == 0){
+						
+					}
                     break;
                 }
+			default: break;
             }
         wrefresh(my_menu_win);
-	}	
-
+	}
+	exit:
 	/* Unpost and free all the memory taken up */
     unpost_menu(my_menu);
     free_menu(my_menu);
