@@ -28,19 +28,20 @@ void print_in_middle(WINDOW *win, int starty, int startx, int width, char *strin
 }
 
 int main(){	
-    ITEM **my_items;
-	int c, x, y, key;				
-	MENU *my_menu;
-    WINDOW *my_menu_win, *my_win;
-    int n_choices, i;
-	char *choices[] = {"START", "QUIT"};
+    ITEM **my_items, **items;
+	int c, x, y, key, mkey;	
+	MENU *main_menu, *menu;
+    WINDOW *main_menu_win, *my_win, *menu_win;
+    int n_choices, nitems, i;
+	char *choices[] = {"START GAME", "   QUIT"}, *mitems[] = {"NEW GAME", "  QUIT"}, *p;
 	/* Initialize curses */
 	initscr();
+	keypad(stdscr, TRUE);
     getmaxyx(stdscr, y, x);
 	start_color();
+	raw();
     cbreak();
     noecho();
-	keypad(stdscr, TRUE);
 	init_pair(1, COLOR_CYAN, COLOR_BLACK);
 
 	/* Create items */
@@ -50,83 +51,140 @@ int main(){
         my_items[i] = new_item(choices[i], NULL);
     }
 	/* Crate menu */
-	my_menu = new_menu((ITEM **)my_items);
+	main_menu = new_menu((ITEM **)my_items);
 
 	/* Create the window to be associated with the menu */
-    my_menu_win = newwin(39, 80, 6, 53);
-    keypad(my_menu_win, TRUE);
+    main_menu_win = newwin(39, 80, 6, 53);
+    keypad(main_menu_win, TRUE);
      
 	/* Set main window and sub window */
-    set_menu_win(my_menu, my_menu_win);
-    set_menu_sub(my_menu, derwin(my_menu_win, 2, 10, 19, 34));
+    set_menu_win(main_menu, main_menu_win);
+    set_menu_sub(main_menu, derwin(main_menu_win, 2, 15, 19, 31));
 
     wresize(stdscr, y, x);
 
 	/* Set menu mark to the string */ 
-	set_menu_mark(my_menu, " > ");
+	set_menu_mark(main_menu, " > ");
 
     /* Print a border around the main window and print a title */
-    box(my_menu_win, 0, 0);
-	print_in_middle(my_menu_win, 1, 4, 70, "Welcome to WORDLE! Press START to begin your adventure", COLOR_PAIR(1));
-	mvwaddch(my_menu_win, 2, 0, ACS_LTEE);
-	mvwhline(my_menu_win, 2, 1, ACS_HLINE, 80);
-	mvwaddch(my_menu_win, 2, 79, ACS_RTEE);
+    box(main_menu_win, 0, 0);
+	print_in_middle(main_menu_win, 1, 4, 70, "Welcome to WORDLE! Press START to begin your adventure", COLOR_PAIR(1));
+	mvwaddch(main_menu_win, 2, 0, ACS_LTEE);
+	mvwhline(main_menu_win, 2, 1, ACS_HLINE, 80);
+	mvwaddch(main_menu_win, 2, 79, ACS_RTEE);
 	refresh();
         
 	/* Post the menu */
-	post_menu(my_menu);
-	wrefresh(my_menu_win);
+	post_menu(main_menu);
+	wrefresh(main_menu_win);
 
     curs_set(0);
 
+	p = (char *)malloc(2 * sizeof(char));
+	p[1] = 0;
+
 	while(TRUE)
 	{       
-		c = wgetch(my_menu_win);
+		c = wgetch(main_menu_win);
         switch(c)
 	        {	case KEY_DOWN:
-				menu_driver(my_menu, REQ_DOWN_ITEM);
+				menu_driver(main_menu, REQ_DOWN_ITEM);
 				break;
 			case KEY_UP:
-				menu_driver(my_menu, REQ_UP_ITEM);
+				menu_driver(main_menu, REQ_UP_ITEM);
 				break;
-            case 10:
-                {	ITEM *curr;
-                    curr = current_item(my_menu);
-                    pos_menu_cursor(my_menu);
-					if (strcmp(item_name(curr), "QUIT") == 0)
-						goto exit;
-					if (strcmp(item_name(curr), "START") == 0)
-					{
-						// unpost_menu(my_menu);
-    					// free_menu(my_menu);
-						// for(i = 0; i < n_choices; i++){
-        				// 	free_item(my_items[i]);}
-						my_win = newwin(39, 80, 6, 53);
-						wresize(stdscr, y, x);
-						box(my_win, 0, 0);
-						print_in_middle(my_win, 1, 4, 70, "WORDLE", COLOR_PAIR(1));
-						mvwaddch(my_win, 2, 0, ACS_LTEE);
-						mvwhline(my_win, 2, 1, ACS_HLINE, 80);
-						mvwaddch(my_win, 2, 79, ACS_RTEE);
-						mvwprintw(my_win, 37, 2, "Press ESC to quit");
-						refresh();
-						wrefresh(my_win);
-						while(TRUE){
-							key = wgetch(my_win);
-							if (key == 27)
-								goto exit;
+            case 10:{
+				ITEM *curr;
+				curr = current_item(main_menu);
+				pos_menu_cursor(main_menu);
+				if (strcmp(item_name(curr), "   QUIT") == 0)
+					goto exit;
+				if (strcmp(item_name(curr), "START GAME") == 0)
+				{
+					newgame:
+					my_win = newwin(39, 80, 6, 53);
+					keypad(my_win, TRUE);
+					wresize(stdscr, y, x);
+					box(my_win, 0, 0);
+					print_in_middle(my_win, 1, 4, 70, "WORDLE", COLOR_PAIR(1));
+					mvwaddch(my_win, 2, 0, ACS_LTEE);
+					mvwhline(my_win, 2, 1, ACS_HLINE, 80);
+					mvwaddch(my_win, 2, 79, ACS_RTEE);
+					mvwprintw(my_win, 37, 2, "Press : to open the menu");
+					refresh();
+					wrefresh(my_win);
+					while(TRUE){
+						key = wgetch(my_win);
+						if (key == ':'){
+							nitems = ARRAY_SIZE(mitems);
+							items = (ITEM **)calloc(nitems, sizeof(ITEM *));
+							for(i = 0; i < nitems; i++){
+								items[i] = new_item(mitems[i], NULL);
+							}
+							menu = new_menu((ITEM**)items);
+							menu_win = newwin(15, 40, 16, 73);
+							keypad(menu_win, TRUE);
+							/* Set main window and sub window */
+							set_menu_win(menu, menu_win);
+							set_menu_sub(menu, derwin(menu_win, 2, 15, 7, 13));
+							/* Set menu mark to the string */ 
+							set_menu_mark(menu, " > ");
+							/* Print a border around the main window and print a title */
+							box(menu_win, 0, 0);
+							print_in_middle(menu_win, 1, 15, 10, "MENU", COLOR_PAIR(1));
+							mvwaddch(menu_win, 2, 0, ACS_LTEE);
+							mvwhline(menu_win, 2, 1, ACS_HLINE, 40);
+							mvwaddch(menu_win, 2, 39, ACS_RTEE);
+							/* Post the menu */
+							post_menu(menu);
+							wrefresh(menu_win);
+							while (TRUE){
+								mkey = wgetch(menu_win);
+								switch (mkey){
+									case KEY_DOWN:
+										menu_driver(menu, REQ_DOWN_ITEM);
+										break;
+									case KEY_UP:
+										menu_driver(menu, REQ_UP_ITEM);
+										break;
+									case 10: {
+										curr = current_item(menu);
+										pos_menu_cursor(menu);
+										if (strcmp(item_name(curr), "  QUIT") == 0){
+											goto exit;
+											unpost_menu(menu);
+											free_menu(menu);
+											for(i = 0; i < nitems; i++){
+												free_item(items[i]);}
+										}
+										if (strcmp(item_name(curr), "NEW GAME") == 0){
+											goto newgame;
+											unpost_menu(menu);
+											free_menu(menu);
+											for(i = 0; i < nitems; i++){
+												free_item(items[i]);}
+										}
+									}
+									default: break;
+								}
+							}
+						}
+						else{
+							p[0] = key;
+							
 						}
 					}
-					break;
+					goto exit;
+				}
+				break;
                 }
 			default: break;
             }
-        wrefresh(my_menu_win);
+        wrefresh(main_menu_win);
 	}
 	exit:
-	/* Unpost and free all the memory taken up */
-    unpost_menu(my_menu);
-    free_menu(my_menu);
+    unpost_menu(main_menu);
+    free_menu(main_menu);
     for(i = 0; i < n_choices; i++){
         free_item(my_items[i]);}
 	endwin();
