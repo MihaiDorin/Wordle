@@ -1,3 +1,9 @@
+/*	
+	Author: Pacuraru Mihai Dorin
+	Faculty of Automatic Control and Computer Science,
+	Polytechnic University of Bucharest
+*/
+
 #ifndef _LIB_
 #define _LIB_
 
@@ -33,7 +39,7 @@ int random_poz(int lower, int upper){
 	return num;
 }
 
-int aparitie(char *word, char c){
+int find(char *word, char c){
 	int i;
 	for (i = 0; i < strlen(word); i++)
 		if (word[i] == c)
@@ -76,14 +82,14 @@ void color_keyboard(WINDOW *win, char *k1, char *k2, char *k3, char key, chtype 
 		}
 }
 
-void color(WINDOW *win, TASTA *key, char *word, int y, int x, char *k1, char *k2, char *k3){
+void colorc(WINDOW *win, TASTA *key, char *word, int y, int x, char *k1, char *k2, char *k3){
 	int i;
 	for (i = 0; i < 5; i++){
 		if(tolower(word[i]) == tolower(key[i].name))
 			key[i].poz = 2;
-		if (aparitie(word, key[i].name) == 0)
+		if (find(word, key[i].name) == 0)
 			key[i].poz = 0;
-		if (aparitie(word, key[i].name) == 1 && tolower(word[i]) != tolower(key[i].name))
+		if (find(word, key[i].name) == 1 && tolower(word[i]) != tolower(key[i].name))
 			key[i].poz = 1;
 	}
 	for (i = 0; i < 5; i++){
@@ -122,6 +128,7 @@ void create_menu(char **choices, MENU **main_menu, ITEM ***my_items, WINDOW **wi
 int ywin, int xwin, char *s, int ys, int xs, int slen, int nlines, int ncols, int y, int x, int chx)
 {
 	int i;
+    curs_set(0);
     *my_items = (ITEM **)calloc(MENU_SIZE, sizeof(ITEM *));
     for(i = 0; i < MENU_SIZE; i++){
         (*my_items)[i] = new_item(choices[i], NULL);
@@ -137,8 +144,32 @@ int ywin, int xwin, char *s, int ys, int xs, int slen, int nlines, int ncols, in
 	mvwaddch(*win, 2, 0, ACS_LTEE);
 	mvwhline(*win, 2, 1, ACS_HLINE, 80);
 	mvwaddch(*win, 2, chx, ACS_RTEE);
-	refresh();
 	post_menu(*main_menu);
 	wrefresh(*win);
-    curs_set(0);
+	refresh();
+}
+
+void create_win(WINDOW **my_win, int *yi, int *xi, int *key_poz)
+{
+	curs_set(1);
+	*my_win = newwin(39, 80, YWIN, XWIN);
+	keypad(*my_win, TRUE);
+	box(*my_win, 0, 0);
+	print_in_middle(*my_win, 1, 35, 8, "WORDLE", COLOR_PAIR(1));
+	mvwaddch(*my_win, 2, 0, ACS_LTEE);
+	mvwhline(*my_win, 2, 1, ACS_HLINE, 80);
+	mvwaddch(*my_win, 2, 79, ACS_RTEE);
+	wattron(*my_win, COLOR_PAIR(1));
+	mvwprintw(*my_win, 37, 2, "Press : to open the menu");
+	wattroff(*my_win, COLOR_PAIR(1));
+	char keyboard1[] = {"Q W E R T Y U I O P"}, keyboard2[] = {"A S D F G H J K L"}, keyboard3[] = {"Z X C V B N M"};
+	mvwprintw(*my_win, Y1, X1, "%s", keyboard1);
+	mvwprintw(*my_win, Y2, X2, "%s", keyboard2);
+	mvwprintw(*my_win, Y3, X3, "%s", keyboard3);
+	*yi = Y;
+	*xi = X;
+	*key_poz = 0;
+	wmove(*my_win, *yi, *xi);
+	refresh();
+	wrefresh(*my_win);
 }

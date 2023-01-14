@@ -1,23 +1,27 @@
 # Wordle
     Wordle game implementation using ncurses
 
-# In order to play this game install xterm on your device
+# In order to play this game you have to install xterm on your device
 ## How to install xterm
-    You can install it by running:
+    Open a termial and use the following commands:
         sudo apt update
         sudo apt install xterm
 
 # How to play the game
-Step 1.
-    Compile the file
+You cand use the Makefile already created.
 
-        make
+## How to compile and play
+Step 1.
+
+    make
 
 Step 2.
-    Run the game
 
-        make run
-Step 3 (optional).
-    If you get bored you can get rid of executable file
+    make run
 
-        make clean
+# Cleaning rules
+After you stop playing don't forget to clean your playground!
+
+You can do it by running
+
+    make clean
