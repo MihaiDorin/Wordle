@@ -1,7 +1,7 @@
 all: wordle
 
 wordle: 
-	gcc main.c -g -Wall -lncurses -lmenu -o wordle
+	gcc main.c func.c -g -Wall -lncurses -lmenu -o wordle
 
 clean: 
 	rm wordle
