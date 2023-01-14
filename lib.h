@@ -7,7 +7,7 @@
 #define ARRAY_SIZE(a) (sizeof(a) / sizeof(a[0]))
 #define MENU_SIZE 2
 #define XWIN 66
-#define YWIN 6
+#define YWIN 7
 #define XMENU 86
 #define YMENU 16
 #define X 34

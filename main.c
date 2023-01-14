@@ -11,7 +11,7 @@ int main()
 	int c, x, y, key, mkey;	
 	MENU *main_menu, *menu;
     WINDOW *main_menu_win, *my_win, *menu_win;
-    int nitems, i, xi, yi, word_poz, key_poz;
+    int i, xi, yi, word_poz, key_poz;
 	char *choices[] = {"START GAME", "   QUIT"}, *mitems[] = {"NEW GAME", "  QUIT"}, *word, *gitems[] = {"RETRY", "QUIT"},
 	*word_list[] = {"arici", "atent", "baiat", "ceata", "debut", "peste", "fixat", "hamac", "harta", "jalon", "jucam", "lacat", "magie",
 	"nufar", "oaste", "perus", "rigle", "roman", "sanie", "scris", "sonda", "texte", "tipar", "titan", "zebra", "vapor", "vatra", "regie", "perie"};

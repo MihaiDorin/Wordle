@@ -121,7 +121,7 @@ void color(WINDOW *win, TASTA *key, char *word, int y, int x, char *k1, char *k2
 void create_menu(char **choices, MENU **main_menu, ITEM ***my_items, WINDOW **win, chtype color, 
 int ywin, int xwin, char *s, int ys, int xs, int slen, int nlines, int ncols, int y, int x, int chx)
 {
-	int n_choices, i;
+	int i;
     *my_items = (ITEM **)calloc(MENU_SIZE, sizeof(ITEM *));
     for(i = 0; i < MENU_SIZE; i++){
         (*my_items)[i] = new_item(choices[i], NULL);
