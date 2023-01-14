@@ -1,10 +1,10 @@
 all: wordle
 
 wordle: 
-	gcc wordle.c -g -Wall -lncurses -lmenu -o wordle
+	gcc main.c -g -Wall -lncurses -lmenu -o wordle
 
 clean: 
 	rm wordle
 
 run:
-	gnome-terminal -- bash -c "./wordle; exec bash"
+	xterm -fa 'Monospace' -fs 10 -maximized ./wordle

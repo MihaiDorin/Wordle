@@ -5,6 +5,10 @@
 #include <time.h>
 #include <ctype.h>
 #define ARRAY_SIZE(a) (sizeof(a) / sizeof(a[0]))
+#define XWIN 66
+#define YWIN 6
+#define XMENU 86
+#define YMENU 16
 #define X 34
 #define Y 11
 #define Y1 31
@@ -159,14 +163,14 @@ int main(){
         my_items[i] = new_item(choices[i], NULL);
     }
 	main_menu = new_menu((ITEM **)my_items);
-    main_menu_win = newwin(39, 80, 6, 53);
+    main_menu_win = newwin(39, 80, YWIN, XWIN);
     keypad(main_menu_win, TRUE);
     set_menu_win(main_menu, main_menu_win);
     set_menu_sub(main_menu, derwin(main_menu_win, 2, 15, 19, 31));
     wresize(stdscr, y, x);
 	set_menu_mark(main_menu, " > ");
     box(main_menu_win, 0, 0);
-	print_in_middle(main_menu_win, 1, 4, 70, "Welcome to WORDLE! Press START to begin your adventure", COLOR_PAIR(1));
+	print_in_middle(main_menu_win, 1, 4, 75, "Welcome to WORDLE! Press START to begin your adventure", COLOR_PAIR(1));
 	mvwaddch(main_menu_win, 2, 0, ACS_LTEE);
 	mvwhline(main_menu_win, 2, 1, ACS_HLINE, 80);
 	mvwaddch(main_menu_win, 2, 79, ACS_RTEE);
@@ -193,11 +197,11 @@ int main(){
 				if (strcmp(item_name(curr), "START GAME") == 0){
 					newgame:
 					curs_set(1);
-					my_win = newwin(39, 80, 6, 53);
+					my_win = newwin(39, 80, YWIN, XWIN);
 					keypad(my_win, TRUE);
 					wresize(stdscr, y, x);
 					box(my_win, 0, 0);
-					print_in_middle(my_win, 1, 4, 70, "WORDLE", COLOR_PAIR(1));
+					print_in_middle(my_win, 1, 35, 8, "WORDLE", COLOR_PAIR(1));
 					mvwaddch(my_win, 2, 0, ACS_LTEE);
 					mvwhline(my_win, 2, 1, ACS_HLINE, 80);
 					mvwaddch(my_win, 2, 79, ACS_RTEE);
@@ -236,7 +240,7 @@ int main(){
 								items[i] = new_item(mitems[i], NULL);
 							}
 							menu = new_menu((ITEM**)items);
-							menu_win = newwin(15, 40, 16, 73);
+							menu_win = newwin(15, 40, YMENU, XMENU);
 							keypad(menu_win, TRUE);
 							set_menu_win(menu, menu_win);
 							set_menu_sub(menu, derwin(menu_win, 2, 15, 7, 13));
@@ -301,7 +305,7 @@ int main(){
 									items[i] = new_item(mitems[i], NULL);
 								}
 								menu = new_menu((ITEM**)items);
-								menu_win = newwin(15, 40, 16, 73);
+								menu_win = newwin(15, 40, YMENU, XMENU);
 								keypad(menu_win, TRUE);
 								set_menu_win(menu, menu_win);
 								set_menu_sub(menu, derwin(menu_win, 2, 15, 7, 13));
@@ -355,7 +359,7 @@ int main(){
 									items[i] = new_item(gitems[i], NULL);
 								}
 								menu = new_menu((ITEM**)items);
-								menu_win = newwin(15, 40, 16, 73);
+								menu_win = newwin(15, 40, YMENU, XMENU);
 								keypad(menu_win, TRUE);
 								set_menu_win(menu, menu_win);
 								set_menu_sub(menu, derwin(menu_win, 2, 15, 7, 13));
