@@ -11,6 +11,7 @@
 
 #endif
 
+// print in middle of a window the string
 void print_in_middle(WINDOW *win, int starty, int startx, int width, char *string, chtype color){	
     int length, x, y;
 	float temp;
@@ -33,12 +34,14 @@ void print_in_middle(WINDOW *win, int starty, int startx, int width, char *strin
 	refresh();
 }
 
-int random_poz(int lower, int upper){
+// generate a random position
+int random_pos(int lower, int upper){
     int num;
 	num = (rand() % (upper - lower + 1)) + lower;
 	return num;
 }
 
+// search the character c in word
 int find(char *word, char c){
 	int i;
 	for (i = 0; i < strlen(word); i++)
@@ -47,6 +50,7 @@ int find(char *word, char c){
 	return 0;
 }
 
+// colors the keyboard based on letter position in word
 void color_keyboard(WINDOW *win, char *k1, char *k2, char *k3, char key, chtype color){
 	int i;
 	for (i = 0; i < strlen(k1); i++)
@@ -82,6 +86,7 @@ void color_keyboard(WINDOW *win, char *k1, char *k2, char *k3, char key, chtype 
 		}
 }
 
+// color the word
 void colorc(WINDOW *win, TASTA *key, char *word, int y, int x, char *k1, char *k2, char *k3){
 	int i;
 	for (i = 0; i < 5; i++){
@@ -124,6 +129,7 @@ void colorc(WINDOW *win, TASTA *key, char *word, int y, int x, char *k1, char *k
 	wrefresh(win);
 }
 
+// create a new menu
 void create_menu(char **choices, MENU **main_menu, ITEM ***my_items, WINDOW **win, chtype color, 
 int ywin, int xwin, char *s, int ys, int xs, int slen, int nlines, int ncols, int y, int x, int chx)
 {
@@ -149,6 +155,7 @@ int ywin, int xwin, char *s, int ys, int xs, int slen, int nlines, int ncols, in
 	refresh();
 }
 
+// create a new window
 void create_win(WINDOW **my_win, int *yi, int *xi, int *key_poz)
 {
 	curs_set(1);

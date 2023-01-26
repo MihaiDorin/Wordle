@@ -33,7 +33,7 @@ typedef struct {
 
 void print_in_middle(WINDOW *win, int starty, int startx, int width, char *string, chtype color);
 
-int random_poz(int lower, int upper);
+int random_pos(int lower, int upper);
 
 int find(char *word, char c);
 

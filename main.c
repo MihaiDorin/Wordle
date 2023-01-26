@@ -11,15 +11,14 @@
 
 #endif
 
-
 int main()
 {	
     ITEM **my_items, **items;
 	int c, key, mkey;
 	MENU *main_menu, *menu;
     WINDOW *main_menu_win, *my_win, *menu_win;
-    int i, xi, yi, word_poz, key_poz;
-	char*choices[] = {"START GAME", "   QUIT"}, *mitems[] = {"NEW GAME", "  QUIT"}, *word, *gitems[] = {"RETRY", "QUIT"},
+    int i, xi, yi, word_pos, key_pos;
+	char *choices[] = {"START GAME", "   QUIT"}, *mitems[] = {"NEW GAME", "  QUIT"}, *word, *gitems[] = {"RETRY", "QUIT"},
 	*word_list[] = {"Abuse", "Adult", "Agent", "Anger", "Apple", "Award", "Basis", "Beach", "Birth", "Block", "Blood", "Board", "Brain", "Bread", "Break", 
 	"Brown", "Buyer", "Cause", "Chain", "Chair", "Chest", "Chief", "Child", "China", "Claim", "Class", "Clock", "Coach", "Coast", "Court", "Cover", "Cream", 
 	"Crime", "Cross", "Crowd", "Crown", "Cycle", "Dance", "Death", "Depth", "Doubt", "Draft", "Drama", "Dream", "Dress", "Drink", "Drive", "Earth", "Enemy", 
@@ -71,24 +70,24 @@ int main()
 
 					if (strcmp(item_name(curr), "START GAME") == 0){
 						newgame:
-						create_win(&my_win, &yi, &xi, &key_poz);
+						create_win(&my_win, &yi, &xi, &key_pos);
 
 						srand(time(NULL));
-						word_poz = random_poz(0, ARRAY_SIZE(word_list) - 1);
-						word = strdup(word_list[word_poz]);
+						word_pos = random_pos(0, ARRAY_SIZE(word_list) - 1);
+						word = strdup(word_list[word_pos]);
 
 						while(TRUE){
 							key = wgetch(my_win);
 							if (key == KEY_BACKSPACE){
-								if (key_poz > 0)
-									key_poz--;
+								if (key_pos > 0)
+									key_pos--;
 								
-								mvwprintw(my_win, yi, xi + 2 * key_poz, "%c", ' ');
+								mvwprintw(my_win, yi, xi + 2 * key_pos, "%c", ' ');
 
-								if (key_poz > 0)
-									wmove(my_win, yi, xi + 2 * key_poz);
+								if (key_pos > 0)
+									wmove(my_win, yi, xi + 2 * key_pos);
 								
-								if (key_poz == 0)
+								if (key_pos == 0)
 									wmove(my_win, yi, xi);
 							}
 							if (key == ':'){
@@ -129,18 +128,18 @@ int main()
 									}
 								}
 							}
-							if (key == 10 && key_poz != 5){
-								for (i = 0; i < key_poz; i++)
+							if (key == 10 && key_pos != 5){
+								for (i = 0; i < key_pos; i++)
 									mvwprintw(my_win, yi, xi + 2 * i, "%c", ' ');
 								
-								key_poz = 0;
+								key_pos = 0;
 								wmove(my_win, yi, xi);
 							}
-							else if (key == 10 && key_poz == 5){
+							else if (key == 10 && key_pos == 5){
 								for (i = 0; i < 5; i++)
 									cuvant[i] = tasta[i].name;
 
-								cuvant[key_poz] = 0;
+								cuvant[key_pos] = 0;
 								char keyboard1[] = {"Q W E R T Y U I O P"}, keyboard2[] = {"A S D F G H J K L"}, keyboard3[] = {"Z X C V B N M"};
 								colorc(my_win, tasta, word, yi, xi, keyboard1, keyboard2, keyboard3);
 
@@ -222,24 +221,24 @@ int main()
 										}
 									}
 								}
-								key_poz = 0; yi += 2; wmove(my_win, yi, xi);
+								key_pos = 0; yi += 2; wmove(my_win, yi, xi);
 							}
 							else if ((key < 'a' || key > 'z') && (key < 'A' || key > 'Z'))
 								continue;
 							else{
-								if(key_poz >= 5)
+								if(key_pos >= 5)
 									continue;
-								if(key_poz < 5){
-									tasta[key_poz].name = tolower(key);
+								if(key_pos < 5){
+									tasta[key_pos].name = tolower(key);
 									if (key >= 'a' && key <= 'z')
-										mvwprintw(my_win, yi, xi + 2 * key_poz, "%c", key - 32);
+										mvwprintw(my_win, yi, xi + 2 * key_pos, "%c", key - 32);
 									if (key >= 'A' && key <= 'Z')
-										mvwprintw(my_win, yi, xi + 2 * key_poz, "%c", key);
+										mvwprintw(my_win, yi, xi + 2 * key_pos, "%c", key);
 								}
 
-								key_poz++;
-								if (key_poz < 5)
-									wmove(my_win, yi, xi + 2 * key_poz);
+								key_pos++;
+								if (key_pos < 5)
+									wmove(my_win, yi, xi + 2 * key_pos);
 							}
 						}
 						goto exit;
