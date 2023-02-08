@@ -12,7 +12,7 @@ func.o: func.c
 	gcc -c func.c -g -Wall -o func.o
 
 run:
-	xterm -fa 'Monospace' -fs 10 -maximized -e ./wordle
+	xterm -fa 'Monospace' -fs 10 -maximized -e ./wordle &
 
 .PHONY: clean
 
