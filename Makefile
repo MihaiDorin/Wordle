@@ -1,20 +1,23 @@
 all: build
 
-build: wordle
+build: bin/wordle
 
-wordle : main.o func.o
-	gcc -o wordle main.o func.o lib.h -lncurses -lmenu
+bin/wordle : bin/main.o bin/func.o
+	gcc -o bin/wordle bin/main.o bin/func.o src/lib.h -lncurses -lmenu
 
-main.o: main.c
-	gcc -c main.c -g -Wall -o main.o
+bin/main.o: src/main.c bin
+	gcc -c src/main.c -g -Wall -o bin/main.o
 
-func.o: func.c
-	gcc -c func.c -g -Wall -o func.o
+bin/func.o: src/func.c bin
+	gcc -c src/func.c -g -Wall -o bin/func.o
+
+bin:
+	mkdir bin
 
 run:
-	xterm -fa 'Monospace' -fs 10 -maximized -e ./wordle &
+	xterm -fa 'Monospace' -fs 10 -maximized -e ./bin/wordle &
 
 .PHONY: clean
 
 clean:
-	rm -f main.o func.o wordle
+	rm -rf bin
