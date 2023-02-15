@@ -19,20 +19,11 @@ int main()
     WINDOW *main_menu_win, *my_win, *menu_win;
     int i, xi, yi, word_pos, key_pos;
 	char *choices[] = {"START GAME", "   QUIT"}, *mitems[] = {"NEW GAME", "  QUIT"}, *word, *gitems[] = {"RETRY", "QUIT"},
-	*word_list[] = {"adult", "agent", "anger", "apple", "award", "basis", "beach", "birth", "block", "blood", "board", "brain", "bread", "break", 
-	"brown", "buyer", "cause", "chain", "chair", "chest", "chief", "child", "china", "claim", "class", "clock", "coach", "coast", "court", "cover", "cream", 
-	"crime", "cross", "crowd", "crown", "cycle", "dance", "death", "depth", "doubt", "draft", "drama", "dream", "dress", "drink", "drive", "earth", "enemy", 
-	"entry", "error", "event", "faith", "fault", "field", "fight", "final", "floor", "focus", "force", "frame", "frank", "front", "fruit", "glass", "grant", 
-	"grass", "green", "group", "guide", "heart", "henry", "horse", "hotel", "house", "image", "index", "input", "issue", "japan", "jones", "judge", "knife", 
-	"laura", "layer", "level", "lewis", "light", "limit", "lunch", "major", "march", "match", "metal", "model", "money", "month", "motor", "mouth", "music", 
-	"night", "noise", "north", "novel", "nurse", "offer", "order", "other", "owner", "panel", "paper", "party", "peace", "peter", "phase", "phone", "piece", 
-	"pilot", "pitch", "place", "plane", "plant", "plate", "point", "pound", "power", "press", "price", "pride", "prize", "proof", "queen", "radio", "range", 
-	"ratio", "reply", "right", "river", "round", "route", "rugby", "scale", "scene", "scope", "score", "sense", "shape", "share", "sheep", "sheet", "shift", 
-	"shirt", "shock", "sight", "simon", "skill", "sleep", "smile", "smith", "smoke", "sound", "south", "space", "speed", "spite", "sport", "squad", "staff", 
-	"stage", "start", "state", "steam", "steel", "stock", "stone", "store", "study", "stuff", "style", "sugar", "table", "taste", "terry", "theme", "thing", 
-	"title", "total", "touch", "tower", "track", "trade", "train", "trend", "trial", "trust", "truth", "uncle", "union", "unity", "value", "video", "visit", 
-	"voice", "waste", "watch", "water", "while", "white", "whole", "woman", "world", "youth"};
-	TASTA tasta[5]; char cuvant[5];
+	*word_list[] = {"adult", "apple", "award", "beach", "brain", "bread", "chair", "child", "class", "dream", "dress", "drink", "earth", "event",
+	"field", "floor", "frame", "grass","group","heart", "horse", "hotel", "house", "image", "index", "input", "level", "light", "lunch", "model",
+	"music","night", "novel", "nurse", "offer", "owner", "paper", "party", "peace", "phone", "queen", "radio", "river", "route", "score", "sheep",
+	"sheet", "title", "tower", "track", "uncle", "unity", "value", "video", "voice", "waste", "watch", "water", "youth"};
+	TASTA tasta[5]; char cuvant[6], keyboard1[] = {"Q W E R T Y U I O P"}, keyboard2[] = {"A S D F G H J K L"}, keyboard3[] = {"Z X C V B N M"};
 
 	initscr();
 	keypad(stdscr, TRUE);
@@ -138,9 +129,7 @@ int main()
 							else if (key == 10 && key_pos == 5){
 								for (i = 0; i < 5; i++)
 									cuvant[i] = tasta[i].name;
-
 								cuvant[key_pos] = 0;
-								char keyboard1[] = {"Q W E R T Y U I O P"}, keyboard2[] = {"A S D F G H J K L"}, keyboard3[] = {"Z X C V B N M"};
 								colorc(my_win, tasta, word, yi, xi, keyboard1, keyboard2, keyboard3);
 
 								if (strcmp(cuvant, word) == 0){
