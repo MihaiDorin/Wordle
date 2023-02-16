@@ -1,7 +1,7 @@
 # Wordle
 Wordle game implementation using `ncurses`
 # Installation
-First of all, you have to give executable permision to the script. You can do it with:
+If you can't execute te installation script, you have to give executable permision to it. You can do it with:
 
     chmod +x install.sh
 
