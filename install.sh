@@ -4,12 +4,18 @@ MSG="Usage: ./install.sh [option]\n\n\tOptions: -u (uninstall) | -h (help)\n\n\t
 Use 'make run' to play the game.\n\n\tType './install.sh -u' to uninstall xterm and clean the workspace.\n"
 
 if test $# == 0; then
+    # install ncurses
+    sudo apt-get update
+    sudo apt-get install -y libncurses5-dev libncursesw5-dev
+
+    # install xterm
     if test -f /usr/bin/xterm 2> /dev/null; then
         echo "XTerm is already installed"
     else
         sudo apt update
         sudo apt install -y xterm
     fi
+
     # compile the game
     make
 fi
