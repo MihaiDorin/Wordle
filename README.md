@@ -18,7 +18,7 @@ ${\color{red}\text{red}}$ if the letter exists in the word and it's on the good 
 
 ${\color{yellow}\text{yellow}}$ if the letter exists in the word but it's not on the good position;
 
-${\color{green}\text{green}}$ if the letter doesn't exist in the word;
+${\color{green}\text{green}}$ if the letter doesn't exist in the word.
 
 You have 6 chances to guess the word. If not, a "GAME OVER" menu appears. You have to choose if you want to give up or try to guess another word.
 If you win you also have to choose if you want to play again or, if you got bored of guessing words, quit and do something else.
