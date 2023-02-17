@@ -5,7 +5,7 @@ If you can't execute the installation script, you have to give executable permis
 
     chmod +x install.sh
 
-After that, just run the script. You have to enter your password for xterm installation.
+After that, just run the script. You have to enter your password for ncurses and xterm installation.
 
 For additional help use:
 
