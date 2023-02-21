@@ -1,14 +1,14 @@
 all: build
 
-build: bin/wordle
+build: bin bin/wordle
 
 bin/wordle : bin/main.o bin/func.o
 	gcc -o bin/wordle bin/main.o bin/func.o src/lib.h -lncurses -lmenu
 
-bin/main.o: src/main.c bin
+bin/main.o: src/main.c
 	gcc -c src/main.c -g -Wall -o bin/main.o
 
-bin/func.o: src/func.c bin
+bin/func.o: src/func.c
 	gcc -c src/func.c -g -Wall -o bin/func.o
 
 bin:
