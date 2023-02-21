@@ -4,16 +4,11 @@
 	Polytechnic University of Bucharest
 */
 
-#ifndef _LIB_
-#define _LIB_
-
 #include "lib.h"
-
-#endif
 
 int main()
 {	
-    ITEM **my_items, **items;
+    ITEM **my_items, **items, *curr;
 	int c, key, mkey;
 	MENU *main_menu, *menu;
     WINDOW *main_menu_win, *my_win, *menu_win;
@@ -52,7 +47,6 @@ int main()
 					break;
 
             	case 10:
-					ITEM *curr;
 					curr = current_item(main_menu);
 					pos_menu_cursor(main_menu);
 

@@ -4,6 +4,9 @@
 	Polytechnic University of Bucharest
 */
 
+#ifndef __LIB_H__
+#define __LIB_H__
+
 #include <menu.h>
 #include <curses.h>
 #include <stdlib.h>
@@ -45,3 +48,5 @@ void create_menu(char **choices, MENU **main_menu, ITEM ***my_items, WINDOW **wi
 int ywin, int xwin, char *s, int ys, int xs, int slen, int nlines, int ncols, int y, int x, int chx);
 
 void create_win(WINDOW **my_win, int *yi, int *xi, int *key_poz);
+
+#endif // __LIB_H__

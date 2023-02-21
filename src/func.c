@@ -4,12 +4,7 @@
 	Polytechnic University of Bucharest
 */
 
-#ifndef _LIB_
-#define _LIB_
-
 #include "lib.h"
-
-#endif
 
 // print in middle of a window the string
 void print_in_middle(WINDOW *win, int starty, int startx, int width, char *string, chtype color){	
